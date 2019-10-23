@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: 'bitnami/mariadb:10.1'
+    environment:
+      - MARIADB_ROOT_PASSWORD
+      - MARIADB_DATABASE
+    volumes:
+      - '~/.tellustek/data/sql/${PROJECT}:/bitnami'
+  web:
+    build: .
+    image: ${PROJECT}:${VERSION}
+    ports:
+      - '80'
+    volumes:
+      - './src:/var/www/html'
+    depends_on:
+      - db
